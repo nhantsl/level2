@@ -102,16 +102,16 @@ export default {
       modal.show();
     },
     Cash() {
-      this.$router.push("/cash");
+      this.$router.push({ path: "/cash" });
     },
     People() {
-      this.$router.push("/people");
+      this.$router.push({ path: "/people" });
     },
     NhiemVu() {
-      this.$router.push("/wallet");
+      this.$router.push({ path: "/wallet" });
     },
     Profile() {
-      this.$router.push("/profile");
+      this.$router.push({ path: "/profile" });
     },
   },
 };
