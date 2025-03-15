@@ -102,16 +102,16 @@ export default {
       modal.show();
     },
     Cash() {
-      window.location.href = "/cash";
+      this.$router.push("/cash");
     },
     People() {
-      window.location.href = "/people";
+      this.$router.push("/people");
     },
     NhiemVu() {
-      window.location.href = "/wallet";
+      this.$router.push("/wallet");
     },
     Profile() {
-      window.location.href = "/profile";
+      this.$router.push("/profile");
     },
   },
 };
