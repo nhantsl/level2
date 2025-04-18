@@ -1,7 +1,7 @@
 <template>
   <header class="cash__header rounded-bottom-4">
     <div class="d-flex">
-      <router-link to="/" class="custom-link">
+      <router-link to="/home" class="custom-link">
         <i class="bi bi-arrow-left-short fs-2"></i>
       </router-link>
       <h5 class="m-auto pe-4">Rút tiền</h5>
@@ -9,7 +9,7 @@
     <div class="d-flex justify-content-between mt-4">
       <div class="lh-0">
         <p class="mb-0">Số dư</p>
-        <h4>500.000.000 VND</h4>
+        <h4>{{ formattedBalance }}</h4>
       </div>
       <div class="ms-auto">
         <img src="@/assets/img/avatar1.svg" alt="" width="48" />
@@ -21,12 +21,12 @@
         <div class="d-flex justify-content-around">
           <div>
             <i class="bi bi-circle-fill text-warning fs-7"></i> Chờ rút
-            <h6>100.000đ</h6>
+            <h6>{{ formattedPending }}</h6>
           </div>
           <div class="vr"></div>
           <div>
             <i class="bi bi-circle-fill text-success fs-7"></i> Đã rút
-            <h6>200.000đ</h6>
+            <h6>{{ formattedWithdrawn }}</h6>
           </div>
         </div>
         <div>
@@ -69,6 +69,24 @@
 <script>
 export default {
   name: "Cash",
+  data() {
+    return {
+      balance: 500000000,
+      pendingAmount: 100000,
+      withdrawnAmount: 200000,
+    };
+  },
+  computed: {
+    formattedBalance() {
+      return this.balance.toLocaleString("vi-VN") + " VND";
+    },
+    formattedPending() {
+      return this.pendingAmount.toLocaleString("vi-VN") + "đ";
+    },
+    formattedWithdrawn() {
+      return this.withdrawnAmount.toLocaleString("vi-VN") + "đ";
+    },
+  },
 };
 </script>
 

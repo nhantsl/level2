@@ -2,7 +2,7 @@
   <section class="text-center">
     <b class="mb-1">{{ userName }}</b
     ><br />
-    <b class="text-success fw-bold">{{ balance }}</b>
+    <b class="text-success fw-bold">{{ formattedBalance }}</b>
   </section>
 </template>
 
@@ -11,7 +11,12 @@ export default {
   name: "ProfileBalance",
   props: {
     userName: String,
-    balance: String,
+    balance: Number,
+  },
+  computed: {
+    formattedBalance() {
+      return this.balance?.toLocaleString("vi-VN") + "đ" || "0đ";
+    },
   },
 };
 </script>

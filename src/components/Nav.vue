@@ -1,21 +1,69 @@
 <template>
   <nav class="navbar navbar-light bg-light fixed-bottom">
     <div class="container d-flex justify-content-around">
-      <router-link class="nav-link text-center" to="/">
-        <i class="bi bi-house-door-fill fs-5"></i>
+      <router-link
+        class="nav-link text-center"
+        to="/home"
+        v-slot="{ isActive }"
+      >
+        <img
+          :src="
+            isActive
+              ? require('@/assets/img/Home-1.svg')
+              : require('@/assets/img/Home.svg')
+          "
+          alt="Home"
+          width="24"
+        />
         <p class="fs-7 m-0">Home</p>
       </router-link>
-      <router-link class="nav-link text-center" to="/wallet">
-        <i class="bi bi-wallet-fill fs-5"></i>
+      <router-link
+        class="nav-link text-center"
+        to="/wallet"
+        v-slot="{ isActive }"
+      >
+        <img
+          :src="
+            isActive
+              ? require('@/assets/img/Wallet-1.svg')
+              : require('@/assets/img/Wallet.svg')
+          "
+          alt="Wallet"
+          width="24"
+        />
         <p class="fs-7 m-0">Kiếm tiền</p>
       </router-link>
-      <router-link class="nav-link text-center" to="/people">
-        <i class="bi bi-people-fill fs-5"></i>
+      <router-link
+        class="nav-link text-center"
+        to="/people"
+        v-slot="{ isActive }"
+      >
+        <img
+          :src="
+            isActive
+              ? require('@/assets/img/3 User-1.svg')
+              : require('@/assets/img/3 User.svg')
+          "
+          alt="Cộng đồng"
+          width="24"
+        />
         <p class="fs-7 m-0">Cộng đồng</p>
       </router-link>
-      <router-link class="nav-link text-center" to="/profile">
-        <i class="bi bi-person-fill fs-5"></i>
-        <p class="fs-7 m-0">Cá Nhân</p>
+      <router-link
+        class="nav-link text-center"
+        to="/profile"
+        v-slot="{ isActive }"
+      >
+        <img
+          :src="
+            isActive
+              ? require('@/assets/img/Profile-1.svg')
+              : require('@/assets/img/Profile.svg')
+          "
+          alt="Cá nhân"
+          width="24"
+        />
+        <p class="fs-7 m-0">Cá nhân</p>
       </router-link>
     </div>
   </nav>
@@ -30,7 +78,6 @@ export default {
 <style scoped>
 @import "@/assets/style/global.css";
 .nav-link.router-link-active {
-  font-weight: bold;
   color: rgb(207, 48, 102);
 }
 </style>

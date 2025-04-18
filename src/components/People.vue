@@ -1,6 +1,6 @@
 <template>
   <header class="people__header">
-    <router-link to="/" class="custom-link">
+    <router-link to="/home" class="custom-link">
       <i class="bi bi-arrow-left-short fs-1"></i>
     </router-link>
     <h5 class="m-auto pe-5">Chi tiết</h5>
@@ -14,7 +14,8 @@
       <div class="row">
         <div class="col">
           <p class="text-secondary mb-1">Ngày hết hạn</p>
-          <i class="bi bi-calendar3 text-secondary"></i> <b>20/09/2020</b>
+          <img class="pb-1" src="../assets/img/Calendar.svg" alt="lich" />
+          <b> 20/09/2020</b>
         </div>
         <div class="col">
           <p class="text-secondary mb-1">Còn lại</p>

@@ -1,8 +1,8 @@
 <template>
   <ProfileHeader />
   <main class="pt-4">
-    <ProfileBalance userName="Nguyễn Thành Dũng" balance="500.000đ" />
-    <ProfileBankInfo pendingMoney="250.000.000đ" needRevision="350.000đ" />
+    <ProfileBalance userName="Nguyễn Thành Dũng" :balance="500000" />
+    <ProfileBankInfo :pendingMoney="250000000" :needRevision="350000" />
     <ProfileFunction :functions="functions" />
   </main>
 </template>

@@ -10,10 +10,10 @@
         />
         <div class="text-white ms-3">
           <h6 class="mb-0">{{ username }}</h6>
-          <p class="fs-7 mb-0">Số dư: {{ balance }}đ</p>
+          <p class="fs-7 mb-0">Số dư: {{ formattedBalance }}</p>
         </div>
       </div>
-      <i class="bi bi-bell fs-5 text-white me-2"></i>
+      <img src="../assets/img/Notification.svg" alt="bell" />
     </div>
 
     <div class="carousel slide" id="carouselExampleIndicators">
@@ -63,6 +63,11 @@ export default {
     username: String,
     balance: Number,
     banners: Array,
+  },
+  computed: {
+    formattedBalance() {
+      return this.balance?.toLocaleString("vi-VN") + "đ" || "0đ";
+    },
   },
 };
 </script>
