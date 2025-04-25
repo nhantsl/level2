@@ -1,35 +1,36 @@
 {
-  "name": "Golike",
+  "name": "golike",
   "version": "0.1.0",
   "private": true,
   "homepage": "https://nhantsl.github.io/level2/",
   "scripts": {
-    "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint --ext .js,.jsx,.vue src/",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "core-js": "^3.8.3",
+    "express": "^5.1.0",
+    "lowdb": "^7.0.1",
     "vue": "^3.2.13",
-    "vue-router": "4",
-    "vuex": "^4.0.2"
+    "vue-router": "4"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
     "@babel/eslint-parser": "^7.12.16",
-    "@vue/cli-plugin-babel": "~5.0.0",
-    "@vue/cli-plugin-eslint": "~5.0.0",
-    "@vue/cli-service": "~5.0.0",
-    "eslint": "^7.32.0",
+    "@vitejs/plugin-vue": "^5.2.3",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "eslint": "^8.21.0",
     "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-vue": "^8.0.3",
     "gh-pages": "^6.3.0",
     "lint-staged": "^11.1.2",
-    "prettier": "^2.4.1"
+    "prettier": "^3.0.0",
+    "vite": "^6.3.2"
   },
   "eslintConfig": {
     "root": true,
@@ -38,11 +39,12 @@
     },
     "extends": [
       "plugin:vue/vue3-essential",
-      "eslint:recommended",
-      "plugin:prettier/recommended"
+      "eslint:recommended"
     ],
     "parserOptions": {
-      "parser": "@babel/eslint-parser"
+      "ecmaVersion": 2020,
+      "sourceType": "module",
+      "requireConfigFile": false
     },
     "rules": {
       "vue/multi-word-component-names": "off"
@@ -58,6 +60,11 @@
     "pre-commit": "lint-staged"
   },
   "lint-staged": {
-    "*.{js,jsx,vue}": "vue-cli-service lint"
+    "*.{js,jsx,vue}": "eslint"
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true,
+    "trailingComma": "es5"
   }
 }

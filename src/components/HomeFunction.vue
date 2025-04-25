@@ -16,103 +16,45 @@
           <p class="pt-1">{{ feature.name }}</p>
         </div>
       </div>
-
-      <!-- Modal Bootstrap -->
-      <div
-        class="modal fade"
-        id="supportModal"
-        tabindex="-1"
-        aria-hidden="true"
-        ref="supportModal"
-      >
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title">Hỗ trợ khách hàng</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <p>📞 0901 234 567</p>
-              <p>📞 0987 654 321</p>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Đóng
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <InviteModal :show="showInviteModal" @close="showInviteModal = false" />
     </section>
   </main>
 </template>
 
 <script>
-import InviteModal from "@/components/InviteModal.vue";
-import { Modal } from "bootstrap";
-
 export default {
-  name: "HomeFunction",
-  components: {
-    InviteModal,
-  },
+  name: 'HomeFunction',
   props: {
     features: Array,
-  },
-  data() {
-    return {
-      showInviteModal: false,
-    };
   },
   methods: {
     handleFeatureClick(featureName) {
       switch (featureName) {
-        case "Mời bạn":
-          this.showInviteModal = true;
-          break;
-        case "Hỗ trợ":
-          this.openSupportModal();
-          break;
-        case "Rút tiền":
-          this.Cash();
-          break;
-        case "Cộng đồng":
-          this.People();
-          break;
-        case "Nhiệm vụ":
-          this.NhiemVu();
-          break;
-        case "Tài khoản":
-          this.Profile();
-          break;
+        case 'Rút tiền':
+          this.Cash()
+          break
+        case 'Cộng đồng':
+          this.People()
+          break
+        case 'Nhiệm vụ':
+          this.NhiemVu()
+          break
+        case 'Tài khoản':
+          this.Profile()
+          break
       }
     },
-    openSupportModal() {
-      const modal = new Modal(this.$refs.supportModal);
-      modal.show();
-    },
     Cash() {
-      this.$router.push("/cash");
+      this.$router.push('/cash')
     },
     People() {
-      this.$router.push("/people");
+      this.$router.push('/people')
     },
     NhiemVu() {
-      this.$router.push("/wallet");
+      this.$router.push('/wallet')
     },
     Profile() {
-      this.$router.push("/profile}");
+      this.$router.push('/profile')
     },
   },
-};
+}
 </script>

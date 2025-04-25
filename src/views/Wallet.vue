@@ -1,10 +1,10 @@
 <template>
-  <WalletHeader userName="Dũng" :avatar="require('@/assets/img/avatar1.svg')" />
+  <WalletHeader :userName="'Dũng'" :avatar="avatar" />
   <main>
     <WalletTabs @tabChanged="handleTabChange" />
     <WalletList v-if="activeTab === 'tasks'" :tasks="tasks" />
     <template v-if="activeTab === 'tasks'">
-      <WalletAd :adBanner="require('@/assets/img/banner1.svg')" />
+      <WalletAd :adBanner="banner" />
       <WalletJobs :jobs="lowPriceJobs" />
     </template>
     <WalletHistory v-if="activeTab === 'history'" :history="history" />
@@ -19,6 +19,13 @@ import WalletHistory from "@/components/WalletHistory.vue";
 import WalletAd from "@/components/WalletAd.vue";
 import WalletJobs from "@/components/WalletJobs.vue";
 
+// Import các hình ảnh bạn cần sử dụng
+import avatarImage from "@/assets/img/avatar1.svg";
+import bannerImage from "@/assets/img/banner1.svg";
+import likeIcon from "@/assets/img/like-1.svg";
+import shareIcon from "@/assets/img/Share.svg";
+import newsImage from "@/assets/img/tintuc1.svg";
+
 export default {
   name: "WalletView",
   components: {
@@ -32,18 +39,20 @@ export default {
   data() {
     return {
       activeTab: "tasks",
+      avatar: avatarImage,  // Sử dụng hình ảnh đã import
+      banner: bannerImage,
       tasks: [
         {
           title: "Like bài viết",
           description: "Thành Dũng vừa cập nhật",
-          icon: require("@/assets/img/like-1.svg"),
+          icon: likeIcon,
           reward: "350đ",
           progress: 25,
         },
         {
           title: "Share bài viết",
           description: "Thành Dũng vừa cập nhật",
-          icon: require("@/assets/img/Share.svg"),
+          icon: shareIcon,
           reward: "500đ",
           progress: 50,
         },
@@ -52,19 +61,19 @@ export default {
         {
           title: "Hoàn thành nhiệm vụ Like bài viết",
           description: "Bạn đã nhận được tiền thưởng",
-          icon: require("@/assets/img/like-1.svg"),
+          icon: likeIcon,
           reward: "350đ",
         },
         {
           title: "Hoàn thành nhiệm vụ Share bài viết",
           description: "Bạn đã nhận được tiền thưởng",
-          icon: require("@/assets/img/Share.svg"),
+          icon: shareIcon,
           reward: "500đ",
         },
       ],
       lowPriceJobs: [
-        { image: require("@/assets/img/tintuc1.svg") },
-        { image: require("@/assets/img/tintuc1.svg") },
+        { image: newsImage },
+        { image: newsImage },
       ],
     };
   },

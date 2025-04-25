@@ -1,6 +1,6 @@
 <template>
-  <section class="row justify-content-center gap-3 mt-3">
-    <div class="profile__bank col-5 shadow-0">
+  <section class="d-flex justify-content-between gap-3 mt-3">
+    <div class="profile__bank flex-fill shadow-0">
       <img
         src="@/assets/img/Tiền chờ duyệt.svg"
         width="40"
@@ -13,7 +13,7 @@
         </p>
       </div>
     </div>
-    <div class="profile__bank col-5 shadow-0">
+    <div class="profile__bank flex-fill shadow-0">
       <img src="@/assets/img/icon.svg" width="40" alt="Needs Revision" />
       <div class="fs-7">
         <p class="text-muted mb-0">Cần làm lại</p>
