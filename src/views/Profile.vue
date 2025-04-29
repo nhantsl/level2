@@ -1,7 +1,7 @@
 <template>
   <ProfileHeader />
   <main class="pt-4">
-    <ProfileBalance userName="Nguyễn Thành Dũng" :balance="500000" />
+    <ProfileBalance :username="username" :balance="balance" />
     <ProfileBankInfo :pendingMoney="250000000" :needRevision="350000" />
     <ProfileFunction :functions="functions" />
   </main>
@@ -29,6 +29,8 @@ export default {
   },
   data() {
     return {
+      username: '',
+      balance: 0,
       functions: [
         { name: "Cài đặt tài khoản", icon: settingIcon },
         { name: "Quản lý tài khoản", icon: manageIcon },
@@ -38,6 +40,14 @@ export default {
         { name: "Nhật ký hoạt động", icon: activityLogIcon },
       ],
     };
+  },
+  mounted() {
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      const user = JSON.parse(userData)
+      this.username = user.username
+      this.balance = user.balance || 0 
+    }
   },
 };
 </script>

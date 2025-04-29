@@ -16,7 +16,7 @@
 
       <div class="row mt-3">
         <div class="col-8">
-          Chào, <b>{{ userName }}!</b>
+          Chào, <b>{{ username }}!</b>
           <p>Chọn tài khoản kiếm tiền</p>
         </div>
         <div class="col-4 text-end">
@@ -31,7 +31,7 @@
 export default {
   name: "WalletHeader",
   props: {
-    userName: String,
+    username: String,
     avatar: String,
   },
 };

@@ -71,7 +71,7 @@ export default {
   name: "Cash",
   data() {
     return {
-      balance: 500000000,
+      balance: 0,
       pendingAmount: 100000,
       withdrawnAmount: 200000,
     };
@@ -86,6 +86,14 @@ export default {
     formattedWithdrawn() {
       return this.withdrawnAmount.toLocaleString("vi-VN") + "đ";
     },
+  },
+  mounted() {
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      const user = JSON.parse(userData)
+      this.username = user.username
+      this.balance = user.balance || 0 
+    }
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <WalletHeader :userName="'Dũng'" :avatar="avatar" />
+  <WalletHeader :username="username" :avatar="avatar" />
   <main>
     <WalletTabs @tabChanged="handleTabChange" />
     <WalletList v-if="activeTab === 'tasks'" :tasks="tasks" />
@@ -38,6 +38,8 @@ export default {
   },
   data() {
     return {
+      username: '',
+      balance: 0,
       activeTab: "tasks",
       avatar: avatarImage,  // Sử dụng hình ảnh đã import
       banner: bannerImage,
@@ -81,6 +83,14 @@ export default {
     handleTabChange(tab) {
       this.activeTab = tab;
     },
+  },
+  mounted() {
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      const user = JSON.parse(userData)
+      this.username = user.username
+      this.balance = user.balance || 0 
+    }
   },
 };
 </script>

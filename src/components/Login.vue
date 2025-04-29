@@ -26,29 +26,43 @@
     </form>
     <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
   </div>
+  <p class="register-link">
+      Chưa có tài khoản?
+      <router-link to="/register">Đăng ký</router-link>
+  </p>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
-      username: "",
-      password: "",
-      errorMessage: "",
-    };
+      username: '',
+      password: '',
+      errorMessage: '',
+    }
   },
   methods: {
-    handleLogin() {
-      // Kiểm tra thông tin đăng nhập (ở đây chỉ là ví dụ đơn giản)
-      if (this.username === "admin" && this.password === "1234") {
-        this.$router.push("/home");
-        // Chuyển hướng đến trang khác hoặc thực hiện các hành động sau khi đăng nhập thành công
-      } else {
-        this.errorMessage = "Invalid username or password";
+    async handleLogin() {
+      try {
+        const response = await axios.post('http://localhost:3000/api/login', {
+          username: this.username,
+          password: this.password,
+        })
+        console.log('Login successful:', response.data)
+        localStorage.setItem('user', JSON.stringify(response.data.user))
+        this.$router.push('/home') 
+      } catch (error) {
+        if (error.response) {
+          this.errorMessage = error.response.data.message || 'An error occurred'
+        } else {
+          console.error('Error:', error)
+        }
       }
     },
   },
-};
+}
 </script>
 
 <style scoped>
@@ -95,5 +109,10 @@ button:hover {
 .error {
   color: red;
   text-align: center;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 16px;
 }
 </style>

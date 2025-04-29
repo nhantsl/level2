@@ -1,6 +1,6 @@
 <template>
   <section class="text-center">
-    <b class="mb-1">{{ userName }}</b
+    <b class="mb-1">{{ username }}</b
     ><br />
     <b class="text-success fw-bold">{{ formattedBalance }}</b>
   </section>
@@ -10,7 +10,7 @@
 export default {
   name: "ProfileBalance",
   props: {
-    userName: String,
+    username: String,
     balance: Number,
   },
   computed: {

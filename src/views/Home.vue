@@ -1,7 +1,7 @@
 <template>
   <HeaderComponent
-    username="Nguyễn Thành Dũng"
-    :balance="100000000"
+    :username="username"
+    :balance="balance"
     :banners="banners"
   />
   <FeatureList :features="features" />
@@ -33,6 +33,8 @@ export default {
   },
   data() {
     return {
+      username: '',
+      balance: 0,
       banners: [
         bannerImage,
         bannerImage,
@@ -52,6 +54,14 @@ export default {
         { title: "News 3", image: newsImage },
       ],
     };
+  },
+  mounted() {
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      const user = JSON.parse(userData)
+      this.username = user.username
+      this.balance = user.balance || 0 
+    }
   },
 };
 </script>
