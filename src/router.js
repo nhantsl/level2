@@ -5,7 +5,6 @@ import People from "./components/People.vue";
 import Profile from "./views/Profile.vue";
 import Cash from "./components/Cash.vue";
 import Login from "./components/Login.vue";
-import Register from "./components/Register.vue";
 
 const routes = [
   { path: "/", redirect: "/login" },
@@ -16,7 +15,6 @@ const routes = [
   { path: "/profile", component: Profile },
   { path: "/cash", component: Cash, meta: { hideNav: true } },
   { path: "/:pathMatch(.*)*", redirect: "/login" },
-  { path: "/register", component: Register, meta: { hideNav: true } }
 ];
 
 const router = createRouter({

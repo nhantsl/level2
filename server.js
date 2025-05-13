@@ -1,78 +1,53 @@
 import express from 'express';
-import { Low } from 'lowdb';
-import { JSONFile } from 'lowdb/node';
 import cors from 'cors';
-import { join } from 'path';
+import puppeteer from 'puppeteer';
+import { exec } from 'child_process';
+import { promisify } from 'util';
+
+const execAsync = promisify(exec);
 
 const app = express();
 const port = 3000;
 
 app.use(cors());
-app.use(express.json());
 
-// Setup Lowdb
-const file = join(process.cwd(), 'db.json');
-const adapter = new JSONFile(file);
-const db = new Low(adapter, { posts: [], users: [] });
+app.post('/api/puppeteer-login', async (req, res) => {
+  try {
+    const browser = await puppeteer.launch({ headless: false });
+    const page = await browser.newPage();
 
-async function startServer() {
-  await db.read(); // Đọc dữ liệu từ db.json
+    await page.goto('https://app.golike.net/login', { timeout: 0 });
 
-  app.use(cors({
-    origin: '*',  // Hoặc thay * bằng địa chỉ frontend của bạn
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  }));
+    await page.waitForSelector('input[type="text"]');
+    await page
 
-  // Routes
-  app.get('/api/posts', (req, res) => {
-    res.json(db.data.posts);
-  });
+    await Promise.all([
+      page.click('button[type="submit"]'),
+      page.waitForNavigation({ timeout: 0 }),
+    ]);
 
-  app.post('/api/login', (req, res) => {
-    const { username, password } = req.body;
-    const user = db.data.users.find(
-      u => u.username === username && u.password === password
-    );
-    if (user) {
-      res.json({
-        success: true,
-        user: {
-          id: user.id,
-          username: user.username,
-          role: user.role,
-          balance: user.balance || 0, // ✅ Thêm balance vào đây
-        },
-      });
+    const currentUrl = page.url();
+    console.log('Current URL:', currentUrl);
+
+    if (currentUrl.includes('home')) {
+      console.log('✅ Đăng nhập thành công!');
+      await browser.close();
+
+      // Mở trình duyệt mặc định đến frontend
+      await execAsync('start http://localhost:5173/home');
+
+      return res.json({ success: true });
     } else {
-      res.status(401).json({ success: false, message: 'Invalid username or password' });
+      console.log('❌ Đăng nhập thất bại!');
+      await browser.close();
+      return res.status(401).json({ success: false, message: 'Đăng nhập thất bại!' });
     }
-  });  
+  } catch (error) {
+    console.error('❌ Lỗi khi login:', error.message);
+    return res.status(500).json({ success: false, message: 'Lỗi server!' });
+  }
+});
 
-  app.post('/api/register', async (req, res) => {
-    const { username, password } = req.body
-    const existingUser = db.data.users.find(u => u.username === username)
-  
-    if (existingUser) {
-      return res.status(400).json({ message: 'Tên đăng nhập đã tồn tại' })
-    }
-  
-    const newUser = {
-      id: db.data.users.length ? db.data.users[db.data.users.length - 1].id + 1 : 1,
-      username,
-      password,
-      role: 'user',
-      balance: 0
-    }
-  
-    db.data.users.push(newUser)
-    await db.write()
-  
-    res.json({ success: true, message: 'Đăng ký thành công' })
-  })
-
-  app.listen(port, () => {
-    console.log(`✅ Server running at http://localhost:${port}`);
-  });
-}
-
-startServer();
+app.listen(port, () => {
+  console.log(`🚀 Server đang chạy tại http://localhost:${port}`);
+});
