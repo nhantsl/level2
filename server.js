@@ -9,15 +9,16 @@ const execAsync = promisify(exec);
 const app = express();
 const port = 3000;
 
-app.use(cors());
+// Cấu hình CORS cho phép frontend của bạn (Cập nhật URL frontend của bạn khi deploy)
+const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:5173';  // Cấu hình URL frontend
+app.use(cors({
+  origin: frontendUrl, // Cho phép từ URL của frontend
+  methods: ['GET', 'POST'],
+}));
+
 app.use(express.json());
 
-// Đặt URL frontend tùy theo môi trường
-const frontendUrl =
-  process.env.NODE_ENV === 'production'
-    ? 'https://nhantsl.github.io/level2/home'  // ✅ URL GitHub Pages
-    : 'http://localhost:5173/home';             // ✅ URL local
-
+// API Puppeteer Login
 app.post('/api/puppeteer-login', async (req, res) => {
   try {
     const browser = await puppeteer.launch({
@@ -29,7 +30,6 @@ app.post('/api/puppeteer-login', async (req, res) => {
     await page.goto('https://app.golike.net/login', { timeout: 0 });
 
     await page.waitForSelector('input[type="text"]');
-
     console.log("⏳ Đang chờ người dùng nhập thông tin và nhấn đăng nhập...");
 
     // Chờ người dùng nhấn đăng nhập và điều hướng hoàn tất
@@ -42,7 +42,7 @@ app.post('/api/puppeteer-login', async (req, res) => {
 
     if (currentUrl.includes('home')) {
       console.log('✅ Đăng nhập thành công!');
-      await execAsync(`start ${frontendUrl}`); // Mở frontend
+      await execAsync(`start http://localhost:5173/home`); // Mở frontend
       return res.json({ success: true });
     } else {
       console.log('❌ Đăng nhập thất bại!');
