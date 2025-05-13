@@ -10,36 +10,42 @@ const app = express();
 const port = 3000;
 
 app.use(cors());
+app.use(express.json());
+
+// Đặt URL frontend tùy theo môi trường
+const frontendUrl =
+  process.env.NODE_ENV === 'production'
+    ? 'https://nhantsl.github.io/level2/home'  // ✅ URL GitHub Pages
+    : 'http://localhost:5173/home';             // ✅ URL local
 
 app.post('/api/puppeteer-login', async (req, res) => {
   try {
-    const browser = await puppeteer.launch({ headless: false });
-    const page = await browser.newPage();
+    const browser = await puppeteer.launch({
+      headless: false,
+      defaultViewport: null,
+    });
 
+    const page = await browser.newPage();
     await page.goto('https://app.golike.net/login', { timeout: 0 });
 
     await page.waitForSelector('input[type="text"]');
-    await page
 
-    await Promise.all([
-      page.click('button[type="submit"]'),
-      page.waitForNavigation({ timeout: 0 }),
-    ]);
+    console.log("⏳ Đang chờ người dùng nhập thông tin và nhấn đăng nhập...");
+
+    // Chờ người dùng nhấn đăng nhập và điều hướng hoàn tất
+    await page.waitForNavigation({ timeout: 0 });
 
     const currentUrl = page.url();
-    console.log('Current URL:', currentUrl);
+    console.log('🌐 Current URL:', currentUrl);
+
+    await browser.close();
 
     if (currentUrl.includes('home')) {
       console.log('✅ Đăng nhập thành công!');
-      await browser.close();
-
-      // Mở trình duyệt mặc định đến frontend
-      await execAsync('start http://localhost:5173/home');
-
+      await execAsync(`start ${frontendUrl}`); // Mở frontend
       return res.json({ success: true });
     } else {
       console.log('❌ Đăng nhập thất bại!');
-      await browser.close();
       return res.status(401).json({ success: false, message: 'Đăng nhập thất bại!' });
     }
   } catch (error) {
