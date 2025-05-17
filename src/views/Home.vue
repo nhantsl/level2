@@ -1,8 +1,9 @@
 <template>
   <HeaderComponent
     :username="username"
-    :balance="balance"
+    :balance="cardNumber"
     :banners="banners"
+    :userImage="userImage"
   />
   <FeatureList :features="features" />
   <NewsList :newsList="newsList" />
@@ -34,7 +35,8 @@ export default {
   data() {
     return {
       username: '',
-      balance: 0,
+      cardNumber: 0,
+      userImage: '',
       banners: [
         bannerImage,
         bannerImage,
@@ -60,7 +62,22 @@ export default {
     if (userData) {
       const user = JSON.parse(userData)
       this.username = user.username
-      this.balance = user.balance || 0 
+      this.userImage = user.image;
+      // this.balance = user.balance || 0
+      const userId = user.id;
+
+    // Gọi API để lấy danh sách người dùng
+    fetch('https://dummyjson.com/users')
+      .then(res => res.json())
+      .then(data => {
+        const matchedUser = data.users.find(u => u.id === userId);
+        const cardNumber = matchedUser?.bank?.cardNumber;
+
+        console.log('Card Number:', cardNumber);
+
+        // Nếu muốn lưu lại trong component
+        this.cardNumber = Number(cardNumber);
+      }) 
     }
   },
 };

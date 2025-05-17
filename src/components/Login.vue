@@ -1,71 +1,125 @@
 <template>
-  <div class="login-container">
-    <div class="login-box">
-      <h2>Đăng nhập GoLike</h2>
-      <button class="login-button" @click="runPuppeteer">Đăng nhập bằng Puppeteer</button>
-    </div>
+  <div class="login-form">
+    <h2>Login</h2>
+    <form @submit.prevent="handleLogin">
+      <div>
+        <label for="username">Username:</label>
+        <input
+          v-model="username"
+          type="text"
+          id="username"
+          placeholder="Enter your username"
+          required
+        />
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input
+          v-model="password"
+          type="password"
+          id="password"
+          placeholder="Enter your password"
+          required
+        />
+      </div>
+      <button type="submit">Login</button>
+    </form>
+    <p v-if="errorMessage" class="error">{{ errorMessage }}</p>
+    <p class="register-link">
+      Chưa có tài khoản?
+      <router-link to="/register">Đăng ký</router-link>
+    </p>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
-  methods: {
-    async runPuppeteer() {
-
-      try {
-        const res = await fetch("http://localhost:3000/api/puppeteer-login", {
-          method: "POST",
-        });
-
-        const data = await res.json();
-        if (data.success) {
-          alert("Đăng nhập thành công! Trình duyệt mặc định sẽ được mở.");
-        } else {
-          alert(data.message || "Đăng nhập thất bại!");
-        }
-      } catch (err) {
-        alert("Lỗi kết nối đến server!");
-        console.error(err);
-      }
+  data() {
+    return {
+      username: '',
+      password: '',
+      errorMessage: '',
     }
-  }
-};
+  },
+  methods: {
+    async handleLogin() {
+      try {
+        const response = await axios.post('https://dummyjson.com/auth/login', {
+          username: this.username,
+          password: this.password,
+        })
+
+        const token = response.data.token || response.data.accessToken
+
+        // Lưu token và thông tin user
+        localStorage.setItem('token', token)
+        localStorage.setItem('user', JSON.stringify(response.data))
+
+        // Chuyển hướng đến Home
+        this.$router.push('/home')
+      } catch (error) {
+        if (error.response) {
+          this.errorMessage = error.response.data.message || 'Sai tài khoản hoặc mật khẩu.'
+        } else {
+          this.errorMessage = 'Không thể kết nối đến server.'
+          console.error('Login error:', error)
+        }
+      }
+    },
+  },
+}
 </script>
 
 <style scoped>
-.login-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  background: linear-gradient(135deg, #74ebd5, #9face6);
+.login-form {
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }
 
-.login-box {
-  background: white;
-  padding: 2rem 3rem;
-  border-radius: 12px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+h2 {
   text-align: center;
 }
 
-.login-box h2 {
-  margin-bottom: 1.5rem;
-  color: #333;
+label {
+  display: block;
+  margin-bottom: 8px;
 }
 
-.login-button {
-  background-color: #4A90E2;
+input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 20px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
   color: white;
   border: none;
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-.login-button:hover {
-  background-color: #357ABD;
+button:hover {
+  background-color: #45a049;
+}
+
+.error {
+  color: red;
+  text-align: center;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 16px;
 }
 </style>

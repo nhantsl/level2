@@ -3,7 +3,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <div class="d-flex">
         <img
-          src="@/assets/img/Avatar.svg"
+          :src="userImage"
           class="img-fluid ms-2"
           alt="Avatar"
           width="32"
@@ -63,6 +63,7 @@ export default {
     username: String,
     balance: Number,
     banners: Array,
+    userImage: String,
   },
   computed: {
     formattedBalance() {

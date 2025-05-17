@@ -9,10 +9,10 @@
     <div class="d-flex justify-content-between mt-4">
       <div class="lh-0">
         <p class="mb-0">Số dư</p>
-        <h4>{{ formattedBalance }}</h4>
+        <h4>{{ formattedcardNumber }}</h4>
       </div>
       <div class="ms-auto">
-        <img src="@/assets/img/avatar1.svg" alt="" width="48" />
+        <img :src="userImage" alt="" width="48" />
       </div>
     </div>
 
@@ -71,14 +71,15 @@ export default {
   name: "Cash",
   data() {
     return {
-      balance: 0,
+      cardNumber: 0,
       pendingAmount: 100000,
       withdrawnAmount: 200000,
+      userImage: String,
     };
   },
   computed: {
-    formattedBalance() {
-      return this.balance.toLocaleString("vi-VN") + " VND";
+    formattedcardNumber() {
+      return this.cardNumber.toLocaleString("vi-VN") + " VND";
     },
     formattedPending() {
       return this.pendingAmount.toLocaleString("vi-VN") + "đ";
@@ -92,7 +93,22 @@ export default {
     if (userData) {
       const user = JSON.parse(userData)
       this.username = user.username
-      this.balance = user.balance || 0 
+      this.userImage = user.image;
+      // this.balance = user.balance || 0
+      const userId = user.id;
+
+    // Gọi API để lấy danh sách người dùng
+    fetch('https://dummyjson.com/users')
+      .then(res => res.json())
+      .then(data => {
+        const matchedUser = data.users.find(u => u.id === userId);
+        const cardNumber = matchedUser?.bank?.cardNumber;
+
+        console.log('Card Number:', cardNumber);
+
+        // Nếu muốn lưu lại trong component
+        this.cardNumber = Number(cardNumber);
+      }) 
     }
   },
 };

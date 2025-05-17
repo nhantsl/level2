@@ -20,7 +20,7 @@
           <p>Chọn tài khoản kiếm tiền</p>
         </div>
         <div class="col-4 text-end">
-          <img :src="avatar" class="img-fluid" width="48" />
+          <img :src="userImage" class="img-fluid" width="48" />
         </div>
       </div>
     </section>
@@ -32,7 +32,7 @@ export default {
   name: "WalletHeader",
   props: {
     username: String,
-    avatar: String,
+    userImage: String,
   },
 };
 </script>

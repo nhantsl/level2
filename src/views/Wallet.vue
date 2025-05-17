@@ -1,5 +1,5 @@
 <template>
-  <WalletHeader :username="username" :avatar="avatar" />
+  <WalletHeader :username="username" :userImage="userImage" />
   <main>
     <WalletTabs @tabChanged="handleTabChange" />
     <WalletList v-if="activeTab === 'tasks'" :tasks="tasks" />
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       username: '',
-      balance: 0,
+      userImage: '',
       activeTab: "tasks",
       avatar: avatarImage,  // Sử dụng hình ảnh đã import
       banner: bannerImage,
@@ -89,7 +89,22 @@ export default {
     if (userData) {
       const user = JSON.parse(userData)
       this.username = user.username
-      this.balance = user.balance || 0 
+      this.userImage = user.image;
+      // this.balance = user.balance || 0
+    //   const userId = user.id;
+
+    // // Gọi API để lấy danh sách người dùng
+    // fetch('https://dummyjson.com/users')
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     const matchedUser = data.users.find(u => u.id === userId);
+    //     const cardNumber = matchedUser?.bank?.cardNumber;
+
+    //     console.log('Card Number:', cardNumber);
+
+    //     // Nếu muốn lưu lại trong component
+    //     this.cardNumber = Number(cardNumber);
+    //   }) 
     }
   },
 };

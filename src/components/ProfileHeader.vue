@@ -11,7 +11,7 @@
         <i class="bi bi-three-dots-vertical"></i>
       </div>
       <div class="m-auto mt-3">
-        <img src="@/assets/img/Avatar.svg" alt="Avatar" />
+        <img :src="userImage" alt="Avatar" width="70" />
       </div>
     </div>
   </header>
@@ -20,6 +20,9 @@
 <script>
 export default {
   name: "ProfileHeader",
+  props: {
+    userImage: String,
+  },
 };
 </script>
 

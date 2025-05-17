@@ -1,7 +1,7 @@
 <template>
-  <ProfileHeader />
+  <ProfileHeader :userImage="userImage"/>
   <main class="pt-4">
-    <ProfileBalance :username="username" :balance="balance" />
+    <ProfileBalance :username="username" :balance="cardNumber" />
     <ProfileBankInfo :pendingMoney="250000000" :needRevision="350000" />
     <ProfileFunction :functions="functions" />
   </main>
@@ -30,7 +30,8 @@ export default {
   data() {
     return {
       username: '',
-      balance: 0,
+      cardNumber: 0,
+      userImage: '',
       functions: [
         { name: "Cài đặt tài khoản", icon: settingIcon },
         { name: "Quản lý tài khoản", icon: manageIcon },
@@ -46,7 +47,21 @@ export default {
     if (userData) {
       const user = JSON.parse(userData)
       this.username = user.username
-      this.balance = user.balance || 0 
+      this.userImage = user.image;
+      const userId = user.id;
+
+    // Gọi API để lấy danh sách người dùng
+    fetch('https://dummyjson.com/users')
+      .then(res => res.json())
+      .then(data => {
+        const matchedUser = data.users.find(u => u.id === userId);
+        const cardNumber = matchedUser?.bank?.cardNumber;
+
+        console.log('Card Number:', cardNumber);
+
+        // Nếu muốn lưu lại trong component
+        this.cardNumber = Number(cardNumber);
+      }) 
     }
   },
 };

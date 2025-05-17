@@ -18,10 +18,8 @@
     "bootstrap": "^5.3.3",
     "core-js": "^3.8.3",
     "cors": "^2.8.5",
-    "exec": "^0.2.1",
     "express": "^5.1.0",
     "lowdb": "^7.0.1",
-    "puppeteer": "^24.8.2",
     "vue": "^3.2.13",
     "vue-router": "4"
   },
