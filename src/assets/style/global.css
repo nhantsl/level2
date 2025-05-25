@@ -1,3 +1,7 @@
+@import "tailwindcss";
+@import "swiper/css";
+@import "swiper/css/pagination";
+
 @media (min-width: 320px) {
     .home__header {
         padding: 10px;
@@ -61,41 +65,34 @@ main {
     padding-inline: 5px;
 }
 
-nav {
-    width: 100%;
-    margin: 0 auto;
-}
-
 section{
     margin-top: 20px;
 }
 
-header .carousel-indicators {
-    bottom: -33px;
+.custom-swiper .swiper-pagination {
+  bottom: -3px;
 }
 
-header .carousel-indicators .custom-indicator {
+.swiper-pagination-bullet {
+  background: white;
+  opacity: 0.4;
   width: 8px;
   height: 8px;
-  border-radius: 50%;
-  opacity: 0.3;
+  transition: 0.3s;
 }
 
-header .carousel-indicators .custom-indicator.active {
+.swiper-pagination-bullet-active {
+  background: white;
   opacity: 1;
   width: 12px;
-  background-color: #fff;
+  height: 8px;
+  border-radius: 40%;
+  transform: scale(1.1);
 }
+
+
 .navbar .nav-link {
     color: silver;
-}
-
-.fs-7 {
-    font-size: 0.8rem;
-}
-
-.shadow-0 {
-    box-shadow: 0px 0px 5px -1px rgba(0, 0, 0, 0.1);
 }
 
 .profile__header {
@@ -123,7 +120,7 @@ header .carousel-indicators .custom-indicator.active {
 
 .profile__bank {
     display: flex;
-    padding: 15px 5px;
+    padding: 15px;
     gap: 5px;
     width: 46%;
     align-items: center;
@@ -132,34 +129,20 @@ header .carousel-indicators .custom-indicator.active {
 
 .cash__header {
     position: relative;
-    height: 210px;
     background-color: #CF3066;
     color: white;
     padding: 20px;
 }
 
 .cash__details {
-    position: absolute;
-    height: 179px;
-    background-color: white;
-    color: #000;
-    padding: 9px;
-    top: 120%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 90%;
-}
-
-.cash__content {
-    max-width: 100%;
-    display: block;
-    padding-top: 145px;
-}
-
-.box {
-    text-align: center;
-    padding-top: 20px;
-    border-radius: 16px;
+  position: absolute;
+  width: 90%;
+  height: 190px;
+  background-color: white;
+  color: #000;
+  top: 110%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .color,
@@ -187,15 +170,7 @@ header .carousel-indicators .custom-indicator.active {
     border-radius: 16px;
     margin: 10px auto;
     padding: 13px;
-    background-color: rgba(146, 146, 234, 0.1);
     width: 100%;
-}
-
-.people__popup {
-    margin: 0 auto;
-    padding-top: 20%;
-    color: #fff;
-    width: 90%;
 }
 
 .progress-bar{
@@ -220,3 +195,8 @@ header .carousel-indicators .custom-indicator.active {
 .custom-link.router-link-exact-active {
   color: inherit !important;
 }
+
+.sha{
+ box-shadow: 0 0 7px 0 rgba(0, 0, 0, 0.15);
+}
+  

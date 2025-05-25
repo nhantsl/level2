@@ -1,11 +1,12 @@
 import { createApp } from "vue";
 import App from "./App.vue";
+import 'swiper/css';
+import 'swiper/css/pagination';
 import "./assets/style/global.css";
-// import "./assets/style/reset.css";
 import router from "./router";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap";
+import { createPinia } from 'pinia'
 
 const app = createApp(App);
+app.use(createPinia())
 app.use(router);
 app.mount("#app");
